@@ -2,10 +2,11 @@
 import { onMessage } from 'webext-bridge/content-script'
 import { createApp } from 'vue'
 import App from './views/App.vue'
+import { pollDOMUntilReady } from './utils'
 import { setupApp } from '~/logic/common-setup'
 
 // Firefox `browser.tabs.executeScript()` requires scripts return a primitive value
-(() => {
+(async () => {
   console.info('[vitesse-webext] Hello world from content script')
 
   // communication example: send previous tab title from background page
@@ -23,7 +24,11 @@ import { setupApp } from '~/logic/common-setup'
   styleEl.setAttribute('href', browser.runtime.getURL('dist/contentScripts/style.css'))
   shadowDOM.appendChild(styleEl)
   shadowDOM.appendChild(root)
-  document.body.appendChild(container)
+
+  const reviewsNode = await pollDOMUntilReady('[data-testid="pdp-reviews-modal-scrollable-panel"]', 10)
+  reviewsNode.parentNode?.insertBefore(container, reviewsNode.previousSibling)
+  // document.body.appendChild(container)
+
   const app = createApp(App)
   setupApp(app)
   app.mount(root)
