@@ -30,6 +30,9 @@
     "postinstall": "simple-git-hooks",
     "typecheck": "tsc --noEmit"
   },
+  "dependencies": {
+    "@julr/unocss-preset-forms": "^0.0.5"
+  },
   "devDependencies": {
     "@antfu/eslint-config": "^0.36.0",
     "@ffflorian/jszip-cli": "^3.4.1",
