@@ -1,5 +1,8 @@
 <script setup lang="ts">
-import { storageDemo } from '~/logic/storage'
+import { useToggle } from '@vueuse/core'
+import { apiKey } from '~/logic/storage'
+
+const [show, toggle] = useToggle(false)
 
 function openOptionsPage() {
   browser.runtime.openOptionsPage()
@@ -15,8 +18,28 @@ function openOptionsPage() {
     <button class="btn mt-2" @click="openOptionsPage">
       Open Options
     </button>
-    <div class="mt-2">
-      <span class="opacity-50">Storage:</span> {{ storageDemo }}
-    </div>
+
+    <form action="m-4">
+      <div class="mt-2">
+        <label for="apiKeys">OpenAI API Key</label>
+        <div>{{ apiKey }}</div>
+        <input
+          id="apiKeys"
+          v-model="apiKey"
+          :type="show ? 'text' : 'password'"
+          autofocus
+          class="
+            mt-1
+            block
+            w-full
+            rounded-md
+            bg-gray-100
+            border-transparent
+            focus:border-gray-500 focus:bg-white focus:ring-0
+          "
+          @click="$event => toggle()"
+        >
+      </div>
+    </form>
   </main>
 </template>

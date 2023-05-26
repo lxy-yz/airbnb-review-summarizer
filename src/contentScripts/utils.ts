@@ -1,3 +1,5 @@
+export const POLL_TIMEOUT = 10
+
 export function pollDOMUntilReady(selector: string, timeout: number): Promise<Element> {
   return new Promise((resolve, reject) => {
     const startTime = Date.now()

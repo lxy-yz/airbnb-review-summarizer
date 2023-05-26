@@ -2,6 +2,7 @@
 import { useToggle } from '@vueuse/core'
 import 'uno.css'
 import { pollDOMUntilReady } from '../utils'
+import { apiKey } from '~/logic/storage'
 
 const [show, toggle] = useToggle(false)
 
@@ -25,7 +26,7 @@ const [sleep, setSleep] = useToggle(false)
 const [neighborhood, setNeighborhood] = useToggle(false)
 
 const summary = ref('')
-const OPENAI_API_KEY = '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'
+const OPENAI_API_KEY = apiKey.value // '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'
 const makePrompt = (placeholder: string) => {
   return `I am an avid traveler who likes to stay in Airbnb.  Help me to summarize the airbnb listing reviews below make informed decision about whether this listing is a fit for me or not. A few things that I care about
 ${rating ? '- Five star reviews' : ''}
@@ -43,7 +44,12 @@ async function getAllReviews() {
 }
 
 async function summarizeReviews() {
+  if (!OPENAI_API_KEY)
+    throw new Error('OpenAI API key is not set')
+
   const prompt = await getAllReviews()
+  if (!prompt)
+    throw new Error('No reviews found')
 
   const res = await fetch('https://api.openai.com/v1/chat/completions', {
     headers: {

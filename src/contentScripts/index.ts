@@ -2,7 +2,7 @@
 import { onMessage } from 'webext-bridge/content-script'
 import { createApp } from 'vue'
 import App from './views/App.vue'
-import { pollDOMUntilReady } from './utils'
+import { POLL_TIMEOUT, pollDOMUntilReady } from './utils'
 import { setupApp } from '~/logic/common-setup'
 
 // Firefox `browser.tabs.executeScript()` requires scripts return a primitive value
@@ -25,9 +25,13 @@ import { setupApp } from '~/logic/common-setup'
   shadowDOM.appendChild(styleEl)
   shadowDOM.appendChild(root)
 
-  const reviewsNode = await pollDOMUntilReady('[data-testid="pdp-reviews-modal-scrollable-panel"]', 10)
-  reviewsNode.parentNode?.insertBefore(container, reviewsNode.previousSibling)
-  // document.body.appendChild(container)
+  try {
+    const reviewsNode = await pollDOMUntilReady('[data-testid="pdp-reviews-modal-scrollable-panel"]', POLL_TIMEOUT)
+    reviewsNode.parentNode?.insertBefore(container, reviewsNode.previousSibling)
+  }
+  catch {
+    document.body.appendChild(container)
+  }
 
   const app = createApp(App)
   setupApp(app)
