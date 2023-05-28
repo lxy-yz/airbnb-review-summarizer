@@ -167,7 +167,9 @@ function handleEnterKey() {
                     v-model="customKeyword"
                     type="text"
                     class="
-                    px-3 py-2
+                    text-xs
+                    pr-[10px]
+                    py-2
                     block
                     w-full
                     rounded-md
@@ -175,7 +177,7 @@ function handleEnterKey() {
                     border-transparent
                     focus:border-gray-500 focus:bg-white focus:ring-0
                   "
-                    placeholder="Custom keyword e.g. 5 ⭐ reviews"
+                    placeholder="Custom keyword (e.g. ⭐ reviews)"
                     @keyup.enter="handleEnterKey()"
                   >
 
