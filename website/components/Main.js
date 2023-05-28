@@ -4,18 +4,25 @@ export default function Main() {
       <div className="max-w-7xl mx-auto flex px-5 py-24 md:flex-row flex-col items-center">
         <div className="lg:flex-grow md:w-1/2 md:ml-24 pt-6 flex flex-col md:items-start md:text-left mb-40 items-center text-center">
           <h1 className="mb-5 sm:text-6xl text-5xl items-center Avenir xl:w-2/2 text-gray-900">
-            We are making Stunning Websites
+            Airbnb review summarizer
           </h1>
-          <p className="mb-4 xl:w-3/4 text-gray-600 text-lg">
-            nine4 is a free to use website template for websites made with
-            Next.js and styled with Tailwind CSS
-          </p>
+          <div className="flex gap-2">
+            <p className="mb-4 xl:w-3/4 text-gray-600 text-lg">
+              {/* Make Airbnb listing reviews great again. */}
+              Summarize Airbnb listing reviews to be simple, personal and
+            <span className="
+            font-semibold text-transparent text-2xl -mt-[3px] ml-1 bg-clip-text
+            bg-gradient-to-r from-purple-500 to-pink-500">
+              useful.
+            </span>
+            </p>
+          </div>
           <div className="flex justify-center">
             <a
-              className="inline-flex items-center px-5 py-3 mt-2 font-medium text-white transition duration-500 ease-in-out transform bg-transparent border rounded-lg bg-gray-900"
+              className="inline-flex items-center px-5 py-3 mt-2 font-medium text-white transition duration-500 ease-in-out transform border rounded-lg bg-primary brightness-100 hover:brightness-125"
               href="https://github.com/r1/nine4-2/"
             >
-              <span className="justify-center">Find out more</span>
+              <span className="justify-center">Download Chrome Extension</span>
             </a>
           </div>
         </div>
@@ -27,7 +34,7 @@ export default function Main() {
           ></img>
         </div>
       </div>
-      <section className="mx-auto">
+      {/* <section className="mx-auto">
         <div className="container px-5 mx-auto lg:px-24 ">
           <div className="flex flex-col w-full mb-4 text-left lg:text-center">
             <h1 className="mb-8 text-2xl Avenir font-semibold text-black">
@@ -65,8 +72,8 @@ export default function Main() {
             </div>
           </div>
         </div>
-      </section>
-      <div className="grr max-w-7xl pt-20 mx-auto text-center">
+      </section> */}
+      {/* <div className="grr max-w-7xl pt-20 mx-auto text-center">
         <h1 className="mb-8 text-6xl Avenir font-semibold text-gray-900">
           Less code, less effort.
         </h1>
@@ -77,11 +84,11 @@ export default function Main() {
           <img
             className="object-cover object-center w-3/4 mb-10 g327 border rounded-lg shadow-md"
             alt="Placeholder Image"
-            src="./images/placeholder.png"
+            src="/images/placeholder.png"
           ></img>
         </div>
-      </div>
-      <section className="relative">
+      </div> */}
+      {/* <section className="relative">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 text-center">
           <div className="py-24 md:py-36">
             <h1 className="mb-5 text-6xl Avenir font-semibold text-gray-900">
@@ -105,7 +112,7 @@ export default function Main() {
             </a>
           </div>
         </div>
-      </section>
+      </section> */}
     </section>
   )
 }
