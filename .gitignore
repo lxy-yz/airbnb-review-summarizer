@@ -3,12 +3,14 @@
 .vite-ssg-dist
 .vite-ssg-temp
 .next
-*.crx
+
+# *.crx
+# *.xpi
+# *.zip
+
 *.local
 *.log
 *.pem
-*.xpi
-*.zip
 dist
 dist-ssr
 extension/manifest.json

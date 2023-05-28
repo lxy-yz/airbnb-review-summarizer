@@ -17,10 +17,10 @@ export async function getManifest() {
       default_icon: './assets/airbnb_openai.png',
       default_popup: './dist/popup/index.html',
     },
-    options_ui: {
-      page: './dist/options/index.html',
-      open_in_tab: true,
-    },
+    // options_ui: {
+    //   page: './dist/options/index.html',
+    //   open_in_tab: true,
+    // },
     background: isFirefox
       ? {
           scripts: ['dist/background/index.mjs'],
