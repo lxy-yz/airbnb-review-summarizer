@@ -19,17 +19,16 @@ export function pollDOMUntilReady(selector: string, timeout: number): Promise<El
   })
 }
 
-export async function makePrompt() {
+export async function makePrompt(customPrompt?: string) {
   const reviewsNode = await pollDOMUntilReady('[data-testid="pdp-reviews-modal-scrollable-panel"]', 10000)
   const allReviews = getAllTextFromNode(reviewsNode)
-  return `Summarize the following airbnb listing reviews by breaking it down to different aspects that I care about when choosing a listing to stay. A few things that I care about are:
+  return `Given airbnb listing reviews: ${allReviews}
+  
+${customPrompt || `Summarize the reviews by breaking it down to different aspects that I care about when choosing a listing to stay. A few things that I care about are:
 ${keywords.value.Books ? '- Books' : ''}
 ${keywords.value.Sauna ? '- Sauna' : ''}
 ${keywords.value.Sleep ? '- Comfortness of bed and good sleep environment' : ''}
-${keywords.value['Safe Neighborhoo'] ? '- Safe neighborhood' : ''}
-
-Listing reviews below: 
-${allReviews}`
+${keywords.value['Safe Neighborhoo'] ? '- Safe neighborhood' : ''}`}`
 }
 
 function getAllTextFromNode(node: Node | Element | null) {

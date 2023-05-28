@@ -1,16 +1,23 @@
 <script setup lang="ts">
-import { useToggle } from '@vueuse/core'
 import 'uno.css'
 import { makePrompt } from '../utils'
 import { apiKey, keywords } from '~/logic/storage'
 
-const LISTING_REVIEWS_REGEX = /airbnb\.com\/rooms\/\d+/i
-const defaultEnabled = LISTING_REVIEWS_REGEX.test(window.location.href)
-const [enabled, _] = useToggle(defaultEnabled)
+// const LISTING_REVIEWS_REGEX = /airbnb\.com\/rooms\/\d+/i
+// const defaultEnabled = LISTING_REVIEWS_REGEX.test(window.location.href)
+// const [enabled, _] = useToggle(defaultEnabled)
 // const OPENAI_API_KEY = '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'
+const mode = ref('keywords')
+const keywordsBtn = ref<HTMLButtonElement | null>(null)
+const promptBtn = ref<HTMLButtonElement | null>(null)
+onMounted(() => {
+  keywordsBtn.value?.focus()
+})
 
 const summary = ref('')
+const isLoading = ref(false)
 const errorMessage = ref('')
+const customPrompt = ref('')
 async function handleSummarizeReviews() {
   errorMessage.value = ''
   try {
@@ -25,11 +32,12 @@ async function summarizeReviews() {
   if (!apiKey.value)
     throw new Error('OpenAI API key is not set')
 
-  const prompt = await makePrompt()
+  const prompt = await makePrompt(mode.value === 'prompt' ? customPrompt.value.trim() : undefined)
   if (!prompt)
     throw new Error('No reviews found')
 
   summary.value = ''
+  isLoading.value = true
   const res = await fetch('https://api.openai.com/v1/chat/completions', {
     headers: {
       'Content-Type': 'application/json',
@@ -52,6 +60,8 @@ async function summarizeReviews() {
       temperature: 0.0,
       stream: true,
     }),
+  }).finally(() => {
+    isLoading.value = false
   })
 
   if (!res.ok)
@@ -99,32 +109,65 @@ function handleEnterKey() {
     >
       <div
         class="pt-4 w-full min-h-[256px]"
-        :show="enabled"
       >
         <div class="flex gap-4">
           <div class="max-w-[368px] w-1/2">
             <div class="flex flex-col">
-              <div class="">
-                <span class="text-sm font-semibold">What do you care about?</span>
-                <div class="mt-4 flex flex-wrap gap-3">
+              <div class="inline-flex mb-4" role="group">
+                <button
+                  ref="keywordsBtn"
+                  type="button"
+                  class="rounded-l-lg border border-solid border-gray-200 bg-white text-sm font-medium px-4 py-2 text-gray-900 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700"
+                  @click="mode = 'keywords'"
+                >
+                  Keywords
+                </button>
+                <button
+                  ref="promptBtn"
+                  type="button"
+                  class="rounded-r-md border border-l-none border-solid border-gray-200 bg-white text-sm font-medium px-4 py-2 text-gray-900 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700"
+                  @click="mode = 'prompt'"
+                >
+                  Prompt
+                </button>
+              </div>
+              <div v-show="mode === 'prompt'" class="">
+                <textarea
+                  v-model="customPrompt"
+                  required
+                  placeholder="Your custom prompt (e.g. summarize the pros and cons of this listing from reviews)"
+                  class="
+                    p-2
+                    block
+                    w-full
+                    box-border
+                    rounded-md
+                    bg-gray-100
+                    border-transparent
+                    focus:border-gray-500 focus:bg-white focus:ring-0
+                  "
+                  rows="8"
+                />
+              </div>
+              <div v-show="mode === 'keywords'" class="mt-2">
+                <!-- <span class="text-sm font-semibold">What do you care about?</span> -->
+                <div class="flex flex-wrap gap-2">
                   <button
                     v-for="([keyword, keywordSelected]) in Object.entries(keywords)"
                     :key="keyword"
-                    class="cursor-pointer font-semibold py-2 px-4 border rounded-full"
-                    :class="keywordSelected ? 'bg-pink-500 text-white border-transparent' : 'bg-transparent text-pink-700 border-pink-500'"
+                    class="cursor-pointer font-semibold px-3 py-1 border rounded-full"
+                    :class="keywordSelected ? 'bg-neutral-700 text-white border-transparent' : 'bg-transparent text-neutral-700 border-neutral-500'"
                     @click="keywords[keyword] = !keywordSelected"
                   >
                     {{ keyword }}
                   </button>
                 </div>
-              </div>
-              <div class="mt-4 flex">
-                <input
-                  v-model="customKeyword"
-                  type="text"
-                  class="
+                <div class="mt-4 flex">
+                  <input
+                    v-model="customKeyword"
+                    type="text"
+                    class="
                     px-3 py-2
-                    mt-1
                     block
                     w-full
                     rounded-md
@@ -132,30 +175,35 @@ function handleEnterKey() {
                     border-transparent
                     focus:border-gray-500 focus:bg-white focus:ring-0
                   "
-                  placeholder="Custom keyword e.g. 5 ⭐ reviews"
-                  @keyup.enter="handleEnterKey()"
-                >
+                    placeholder="Custom keyword e.g. 5 ⭐ reviews"
+                    @keyup.enter="handleEnterKey()"
+                  >
 
-                <div class="relative flex items-center">
-                  <uil-enter class="absolute right-[10px] block m-auto text-gray-500 font-light" />
+                  <div class="relative flex items-center">
+                    <uil-enter class="absolute right-[10px] block m-auto text-gray-500 font-light" />
+                  </div>
                 </div>
               </div>
               <div class="mt-10">
                 <button
-                  class="w-full bg-pink-500 text-white font-bold py-2 px-4 border-b-4 rounded
+                  class="relative w-full bg-pink-500 text-white font-bold py-2 px-4 border-b-4 rounded
                   border-pink-700 hover:border-pink-500 hover:bg-pink-400 hover:cursor-pointer"
                   @click="handleSummarizeReviews()"
                 >
+                  <gg-spinner v-show="isLoading" class="animate-spin absolute left-3" />
                   Summarize Reviews
                 </button>
               </div>
             </div>
           </div>
-          <div class="flex-1 flex flex-col">
-            <div class="text-sm font-semibold">
+          <div class="relative flex-1 flex flex-col bg-gray-100">
+            <div
+              :class="summary ? 'hidden!' : 'block'"
+              class="absolute w-full h-full flex justify-center items-center text-gray-500 font-semibold"
+            >
               Summary
             </div>
-            <div class="mt-4 flex-1 bg-gray-100 text-s px-3 py-2">
+            <div class="mt-4 flex-1 text-s px-3 py-2">
               {{ errorMessage || summary }}
             </div>
           </div>
