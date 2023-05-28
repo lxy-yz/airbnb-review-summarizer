@@ -1,3 +1,5 @@
+import { DOWNLOAD_URL } from '../constants'
+
 export default function Main() {
   return (
     <section className="text-gray-600 body-font">
@@ -20,7 +22,7 @@ export default function Main() {
           <div className="flex justify-center">
             <a
               className="inline-flex items-center px-5 py-3 mt-2 font-medium text-white transition duration-500 ease-in-out transform border rounded-lg bg-primary brightness-100 hover:brightness-125"
-              href="https://github.com/r1/nine4-2/"
+              href={DOWNLOAD_URL}
             >
               <span className="justify-center">Download Chrome Extension</span>
             </a>

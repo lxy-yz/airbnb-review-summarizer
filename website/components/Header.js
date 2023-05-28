@@ -1,5 +1,6 @@
 import React from 'react'
 import Image from 'next/image'
+import { DOWNLOAD_URL } from '../constants'
 
 export default function Header() {
   const [navbarOpen, setNavbarOpen] = React.useState(false)
@@ -59,7 +60,7 @@ export default function Header() {
               <li>
                 <a
                   className="inline-flex items-center px-4 py-2 mt-2 font-medium text-gray-600 transition duration-500 ease-in-out transform bg-transparent rounded-lg text-md md:mt-0 md:ml-4 bg-gray-900"
-                  href="/"
+                  href={DOWNLOAD_URL}
                 >
                   <span className="justify-center">Download</span>
                   <svg
