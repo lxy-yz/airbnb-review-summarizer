@@ -1,5 +1,12 @@
+<script setup lang="ts">
+const appName = __NAME__
+</script>
+
 <template>
-  <a class="icon-btn mx-2 text-2xl" rel="noreferrer" href="https://github.com/antfu/vitesse-webext" target="_blank" title="GitHub">
-    <pixelarticons-power />
-  </a>
+  <div class="flex items-center gap-3 -mx-4 px-6 py-6 bg-black text-white">
+    <img src="/assets/airbnb_openai.png" class="icon-btn w-6 h-6" alt="extension icon">
+    <h1 class="text-2xl">
+      {{ appName }}
+    </h1>
+  </div>
 </template>

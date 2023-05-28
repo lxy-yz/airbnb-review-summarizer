@@ -10,6 +10,17 @@ const [enabled, _] = useToggle(defaultEnabled)
 // const OPENAI_API_KEY = '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'
 
 const summary = ref('')
+const errorMessage = ref('')
+async function handleSummarizeReviews() {
+  errorMessage.value = ''
+  try {
+    await summarizeReviews()
+  }
+  catch (err) {
+    console.error(err)
+    errorMessage.value = 'Something went wrong. Check if the API key is correct.'
+  }
+}
 async function summarizeReviews() {
   if (!apiKey.value)
     throw new Error('OpenAI API key is not set')
@@ -95,12 +106,12 @@ function handleEnterKey() {
             <div class="flex flex-col">
               <div class="">
                 <span class="text-sm font-semibold">What do you care about?</span>
-                <div class="mt-3 flex flex-wrap gap-3">
+                <div class="mt-4 flex flex-wrap gap-3">
                   <button
                     v-for="([keyword, keywordSelected]) in Object.entries(keywords)"
                     :key="keyword"
                     class="cursor-pointer font-semibold py-2 px-4 border rounded-full"
-                    :class="keywordSelected ? 'bg-blue-500 text-white border-transparent' : 'bg-transparent text-blue-700 border-blue-500'"
+                    :class="keywordSelected ? 'bg-pink-500 text-white border-transparent' : 'bg-transparent text-pink-700 border-pink-500'"
                     @click="keywords[keyword] = !keywordSelected"
                   >
                     {{ keyword }}
@@ -131,8 +142,9 @@ function handleEnterKey() {
               </div>
               <div class="mt-10">
                 <button
-                  class="w-full bg-blue-500 hover:bg-blue-400 hover:cursor-pointer text-white font-bold py-2 px-4 border-b-4 border-blue-700 hover:border-blue-500 rounded"
-                  @click="summarizeReviews()"
+                  class="w-full bg-pink-500 text-white font-bold py-2 px-4 border-b-4 rounded
+                  border-pink-700 hover:border-pink-500 hover:bg-pink-400 hover:cursor-pointer"
+                  @click="handleSummarizeReviews()"
                 >
                   Summarize Reviews
                 </button>
@@ -143,8 +155,8 @@ function handleEnterKey() {
             <div class="text-sm font-semibold">
               Summary
             </div>
-            <div class="mt-3 flex-1 bg-gray-100 text-s px-3 py-2">
-              {{ summary }}
+            <div class="mt-4 flex-1 bg-gray-100 text-s px-3 py-2">
+              {{ errorMessage || summary }}
             </div>
           </div>
         </div>
