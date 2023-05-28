@@ -9,8 +9,7 @@ import IconsResolver from 'unplugin-icons/resolver'
 import Components from 'unplugin-vue-components/vite'
 import AutoImport from 'unplugin-auto-import/vite'
 import UnoCSS from 'unocss/vite'
-import { isDev, port, r } from './scripts/utils'
-import packageJson from './package.json'
+import { isDev, name, port, r } from './scripts/utils'
 
 export const sharedConfig: UserConfig = {
   root: r('src'),
@@ -21,7 +20,7 @@ export const sharedConfig: UserConfig = {
   },
   define: {
     __DEV__: isDev,
-    __NAME__: JSON.stringify(packageJson.name),
+    __NAME__: JSON.stringify(name),
   },
   plugins: [
     Vue(),

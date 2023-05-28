@@ -1,5 +1,6 @@
 import { resolve } from 'node:path'
 import { bgCyan, black } from 'kolorist'
+import packageJson from '../package.json'
 
 export const port = parseInt(process.env.PORT || '') || 3303
 export const r = (...args: string[]) => resolve(__dirname, '..', ...args)
@@ -9,3 +10,7 @@ export const isFirefox = process.env.EXTENSION === 'firefox'
 export function log(name: string, message: string) {
   console.log(black(bgCyan(` ${name} `)), message)
 }
+
+export const name = packageJson.name.split('-')
+  .map((s: string) => s.charAt(0).toUpperCase() + s.substring(1))
+  .join(' ')
