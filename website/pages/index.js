@@ -3,25 +3,28 @@ import { NextSeo } from 'next-seo'
 import Header from '../components/Header'
 import Main from '../components/Main'
 import Footer from '../components/Footer'
+import pkg from '../package.json'
 
 export default function Home() {
   return (
     <div className="text-black">
       <NextSeo
-        title="Home: nine4"
-        description="Welcome to nine4 homepage."
+        title={pkg.displayName}
+        description={pkg.description}
         canonical="https://nine4-2.vercel.app/"
         openGraph={{
           url: 'https://nine4-2.vercel.app/',
         }}
       />
       <Head>
-        <title>nine4</title>
+        <title>{pkg.displayName}</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Header />
-      <Main />
-      <Footer />
+      <div className="min-h-screen grid">
+        <Header />
+        <Main />
+        <Footer />
+      </div>
     </div>
   )
 }

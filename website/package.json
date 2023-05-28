@@ -1,7 +1,9 @@
 {
   "name": "website",
+  "displayName": "Airbnb Review Summarizer",
   "version": "0.1.0",
   "private": true,
+  "description": "A browser extension that summarizes Airbnb reviews",
   "scripts": {
     "dev": "next dev -p 4000",
     "build": "next build",
