@@ -1,60 +1,28 @@
 <script setup lang="ts">
 import { useToggle } from '@vueuse/core'
 import 'uno.css'
-import { pollDOMUntilReady } from '../utils'
-import { apiKey } from '~/logic/storage'
-
-const [show, toggle] = useToggle(false)
-
-function getAllTextFromNode(node: Node | Element | null) {
-  if (!node)
-    return ''
-  let text = ''
-  if (node.nodeType === Node.TEXT_NODE)
-    text += node.textContent
-  for (let i = 0; i < node.childNodes.length; i++)
-    text += getAllTextFromNode(node.childNodes[i])
-  return text
-}
+import { makePrompt } from '../utils'
+import { apiKey, keywords } from '~/logic/storage'
 
 const LISTING_REVIEWS_REGEX = /airbnb\.com\/rooms\/\d+/i
 const defaultEnabled = LISTING_REVIEWS_REGEX.test(window.location.href)
-const [enabled, setEnabled] = useToggle(defaultEnabled)
-
-const [rating, setRating] = useToggle(false)
-const [sleep, setSleep] = useToggle(false)
-const [neighborhood, setNeighborhood] = useToggle(false)
+const [enabled, _] = useToggle(defaultEnabled)
+// const OPENAI_API_KEY = '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'
 
 const summary = ref('')
-const OPENAI_API_KEY = apiKey.value // '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'
-const makePrompt = (placeholder: string) => {
-  return `I am an avid traveler who likes to stay in Airbnb.  Help me to summarize the airbnb listing reviews below make informed decision about whether this listing is a fit for me or not. A few things that I care about
-${rating ? '- Five star reviews' : ''}
-${sleep ? '- Good sleep environment' : ''}
-${neighborhood ? '- Safe neighborhood' : ''}
-
-Listing reviews below: 
-${placeholder}`
-}
-
-async function getAllReviews() {
-  const reviewsNode = await pollDOMUntilReady('[data-testid="pdp-reviews-modal-scrollable-panel"]', 10000)
-  const allText = getAllTextFromNode(reviewsNode)
-  return makePrompt(allText)
-}
-
 async function summarizeReviews() {
-  if (!OPENAI_API_KEY)
+  if (!apiKey.value)
     throw new Error('OpenAI API key is not set')
 
-  const prompt = await getAllReviews()
+  const prompt = await makePrompt()
   if (!prompt)
     throw new Error('No reviews found')
 
+  summary.value = ''
   const res = await fetch('https://api.openai.com/v1/chat/completions', {
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': `Bearer ${OPENAI_API_KEY}`,
+      'Authorization': `Bearer ${apiKey.value}`,
     },
     method: 'POST',
     body: JSON.stringify({
@@ -101,60 +69,67 @@ async function summarizeReviews() {
     }
   }
 }
+
+const customKeyword = ref('')
+function handleEnterKey() {
+  const keyword = customKeyword.value.trim()
+  if (!keyword)
+    return
+  keywords.value[keyword] = true
+}
 </script>
 
-<!-- transition="opacity duration-300" -->
-<!-- :class="show ? 'opacity-100' : 'opacity-0'" -->
 <template>
-  <div class="m-5 z-100 font-sans select-none leading-1em">
+  <div class="z-100 font-sans mb-8">
     <div
       class="bg-white text-gray-800 rounded-lg shadow h-min"
       p="x-4 y-2"
       m="y-auto r-2"
     >
-      <h1 class="text-lg">
-        Summary
-      </h1>
-      <SharedSubtitle />
-
       <div
-        class="w-full h-[256px] px-4 py-2 bg-gray-100 rounded shadow-inner"
+        class="pt-4 w-full min-h-[256px]"
         :show="enabled"
       >
         <div class="flex gap-4">
-          <div class="w-1/2">
+          <div class="max-w-[368px] w-1/2">
             <div class="flex flex-col">
               <div class="">
                 <span class="text-sm font-semibold">What do you care about?</span>
-                <div class="mt-2 flex flex-wrap gap-3">
+                <div class="mt-3 flex flex-wrap gap-3">
                   <button
-                    class="font-semibold py-2 px-4 border rounded"
-                    :class="rating ? 'bg-blue-500 text-white border-transparent' : 'bg-transparent text-blue-700 border-blue-500'"
-                    @click="setRating(!rating)"
+                    v-for="([keyword, keywordSelected]) in Object.entries(keywords)"
+                    :key="keyword"
+                    class="cursor-pointer font-semibold py-2 px-4 border rounded-full"
+                    :class="keywordSelected ? 'bg-blue-500 text-white border-transparent' : 'bg-transparent text-blue-700 border-blue-500'"
+                    @click="keywords[keyword] = !keywordSelected"
                   >
-                    Five star review
-                  </button>
-                  <button
-                    class="font-semibold py-2 px-4 border rounded"
-                    :class="sleep ? 'bg-blue-500 text-white border-transparent' : 'bg-transparent text-blue-700 border-blue-500'"
-                    @click="setSleep(!sleep)"
-                  >
-                    Sleep
-                  </button>
-                  <button
-                    class="font-semibold py-2 px-4 border rounded"
-                    :class="neighborhood ? 'bg-blue-500 text-white border-transparent' : 'bg-transparent text-blue-700 border-blue-500'"
-                    @click="setNeighborhood(!neighborhood)"
-                  >
-                    Safe Neighborhood
+                    {{ keyword }}
                   </button>
                 </div>
               </div>
-              <div class="mt-4">
-                <label for="custom_prompt" class="text-sm font-semibold">Write your custom prompt (optional)</label>
-                <textarea id="custom_prompt" class="w-full max-h-16 mt-2" name="custom_prompt" cols="20" rows="10" />
+              <div class="mt-4 flex">
+                <input
+                  v-model="customKeyword"
+                  type="text"
+                  class="
+                    px-3 py-2
+                    mt-1
+                    block
+                    w-full
+                    rounded-md
+                    bg-gray-100
+                    border-transparent
+                    focus:border-gray-500 focus:bg-white focus:ring-0
+                  "
+                  placeholder="Custom keyword e.g. 5 ⭐ reviews"
+                  @keyup.enter="handleEnterKey()"
+                >
+
+                <div class="relative flex items-center">
+                  <uil-enter class="absolute right-[10px] block m-auto text-gray-500 font-light" />
+                </div>
               </div>
-              <div class="mt-4">
+              <div class="mt-10">
                 <button
                   class="w-full bg-blue-500 hover:bg-blue-400 hover:cursor-pointer text-white font-bold py-2 px-4 border-b-4 border-blue-700 hover:border-blue-500 rounded"
                   @click="summarizeReviews()"
@@ -164,9 +139,14 @@ async function summarizeReviews() {
               </div>
             </div>
           </div>
-          <p class="w-1/2 bg-white text-sm">
-            {{ summary }}
-          </p>
+          <div class="flex-1 flex flex-col">
+            <div class="text-sm font-semibold">
+              Summary
+            </div>
+            <div class="mt-3 flex-1 bg-gray-100 text-s px-3 py-2">
+              {{ summary }}
+            </div>
+          </div>
         </div>
       </div>
     </div>
