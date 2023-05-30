@@ -24,7 +24,7 @@ export default function Home() {
         <title>{pkg.displayName}</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div className="min-h-screen grid">
+      <div className="grid">
         <Header />
         <Main />
         <Footer />

@@ -2,9 +2,9 @@ import { DOWNLOAD_URL } from '../constants'
 
 export default function Main() {
   return (
-    <section className="text-gray-600 body-font flex items-center h-[calc(100vh-64px)] mt-[64px]">
+    <section className="text-gray-600 body-font flex items-center min-h-[calc(100vh)] mt-[80px] mb-[52px] lg:mt-0">
       <div className="max-w-6xl mx-auto flex px-5 md:flex-row flex-col items-center">
-        <div className="lg:flex-grow w-1/2 md:ml-4 pt-6 flex flex-col md:items-start md:text-left mb-40 items-center text-center">
+        <div className="lg:flex-grow w-1/2 md:ml-4 p-6 flex flex-col md:items-start md:text-left items-center text-center">
           <h1 className="mb-5 sm:text-6xl text-5xl items-center Avenir xl:w-2/2 text-gray-900">
             Airbnb review summarizer
           </h1>
@@ -19,7 +19,7 @@ export default function Main() {
             </span>
             </p>
           </div>
-          <div className="flex gap-3 justify-center">
+          <div className="flex flex-col md:flex-row gap-2 justify-center">
             <a
               className="inline-flex items-center px-5 py-3 mt-2 font-medium text-white transition duration-500 ease-in-out transform border rounded-lg bg-primary brightness-100 hover:brightness-125"
               href={DOWNLOAD_URL}
