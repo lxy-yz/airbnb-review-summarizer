@@ -37,7 +37,7 @@ export async function getManifest() {
     permissions: [
       'tabs',
       'storage',
-      'activeTab',
+      // 'activeTab',
     ],
     host_permissions: ['*://airbnb.com/*'],
     content_scripts: [
