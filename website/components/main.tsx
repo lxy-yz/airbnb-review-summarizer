@@ -2,8 +2,8 @@ import { DOWNLOAD_URL } from '../constants'
 
 export default function Main() {
   return (
-    <section className="text-gray-600 body-font">
-      <div className="max-w-6xl mx-auto flex px-5 py-36 md:flex-row flex-col items-center">
+    <section className="text-gray-600 body-font flex items-center h-[calc(100vh-64px)] mt-[64px]">
+      <div className="max-w-6xl mx-auto flex px-5 md:flex-row flex-col items-center">
         <div className="lg:flex-grow w-1/2 md:ml-4 pt-6 flex flex-col md:items-start md:text-left mb-40 items-center text-center">
           <h1 className="mb-5 sm:text-6xl text-5xl items-center Avenir xl:w-2/2 text-gray-900">
             Airbnb review summarizer
@@ -19,20 +19,26 @@ export default function Main() {
             </span>
             </p>
           </div>
-          <div className="flex justify-center">
+          <div className="flex gap-3 justify-center">
             <a
               className="inline-flex items-center px-5 py-3 mt-2 font-medium text-white transition duration-500 ease-in-out transform border rounded-lg bg-primary brightness-100 hover:brightness-125"
               href={DOWNLOAD_URL}
             >
               <span className="justify-center">Download Chrome Extension</span>
             </a>
+            <a
+              className="inline-flex items-center px-5 py-3 mt-2 font-medium transition duration-500 ease-in-out transform border rounded-lg bg-neutral-50 hover:bg-neutral-200"
+              href="/Demo_Original.gif"
+            >
+              <span className="justify-center">Demo</span>
+            </a>
           </div>
         </div>
         <div className="md:w-1/2">
           <img
             className=""
-            alt="iPhone-12"
-            src="/Demo.gif"
+            alt="Screenshot of the extension"
+            src="/Screenshot.png"
           ></img>
         </div>
       </div>
