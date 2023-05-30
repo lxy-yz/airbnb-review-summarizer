@@ -53,7 +53,8 @@ async function summarizeReviews() {
         },
         {
           role: 'user',
-          content: prompt,
+          // FIX: use GPT4 (32000 token limit) to workaround the 4000 token (4 char) limit
+          content: prompt.slice(0, 15000),
         },
       ],
       max_tokens: 150,
