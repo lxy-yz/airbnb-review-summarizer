@@ -27,10 +27,12 @@ import { setupApp } from '~/logic/common-setup'
 
   try {
     const reviewsNode = await pollDOMUntilReady('[data-testid="pdp-reviews-modal-scrollable-panel"]', POLL_TIMEOUT)
-    reviewsNode.parentNode?.insertBefore(container, reviewsNode.previousSibling)
+    const searchNode = reviewsNode.parentNode?.firstChild as unknown as ParentNode
+    searchNode.prepend(container)
   }
   catch {
-    document.body.appendChild(container)
+    console.error('reviews panel not found')
+    // document.body.appendChild(container)
   }
 
   const app = createApp(App)
