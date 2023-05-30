@@ -35,6 +35,7 @@ async function summarizeReviews() {
   const prompt = await makePrompt(mode.value === 'prompt' ? customPrompt.value.trim() : undefined)
   if (!prompt)
     throw new Error('No reviews found')
+  // console.log('[prompt]', prompt)
 
   summary.value = ''
   isLoading.value = true
@@ -137,6 +138,7 @@ function handleEnterKey() {
                   required
                   placeholder="Your custom prompt (e.g. summarize the pros and cons of this listing from reviews)"
                   class="
+                    text-sm
                     p-2
                     block
                     w-full
