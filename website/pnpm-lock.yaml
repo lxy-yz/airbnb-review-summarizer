@@ -1,6 +1,7 @@
 lockfileVersion: 5.4
 
 specifiers:
+  '@types/node': ^20.2.5
   '@types/react': 18.2.7
   autoprefixer: ^10.4.14
   next: 12.3.4
@@ -10,6 +11,7 @@ specifiers:
   react: 17.0.2
   react-dom: 17.0.2
   tailwindcss: ^3.3.2
+  typescript: ^5.0.4
 
 dependencies:
   autoprefixer: 10.4.14_postcss@8.4.24
@@ -22,7 +24,9 @@ dependencies:
   tailwindcss: 3.3.2
 
 devDependencies:
+  '@types/node': 20.2.5
   '@types/react': 18.2.7
+  typescript: 5.0.4
 
 packages:
 
@@ -212,6 +216,10 @@ packages:
     dependencies:
       tslib: 2.5.2
     dev: false
+
+  /@types/node/20.2.5:
+    resolution: {integrity: sha512-JJulVEQXmiY9Px5axXHeYGLSjhkZEnD+MDPDGbCbIAbMslkKwmygtZFy1X6s/075Yo94sf8GuSlFfPzysQrWZQ==}
+    dev: true
 
   /@types/prop-types/15.7.5:
     resolution: {integrity: sha512-JCB8C6SnDoQf0cNycqd/35A7MjcnK+ZTqE7judS6o7utxUCg6imJg3QK2qzHKszlTjcj2cn+NwMB2i96ubpj7w==}
@@ -1016,6 +1024,12 @@ packages:
   /tslib/2.5.2:
     resolution: {integrity: sha512-5svOrSA2w3iGFDs1HibEVBGbDrAY82bFQ3HZ3ixB+88nsbsWQoKqDRb5UBYAUPEzbBn6dAp5gRNXglySbx1MlA==}
     dev: false
+
+  /typescript/5.0.4:
+    resolution: {integrity: sha512-cW9T5W9xY37cc+jfEnaUvX91foxtHkza3Nw3wkoF4sSlKn0MONdkdEndig/qPBWXNkmplh3NzayQzCiHM4/hqw==}
+    engines: {node: '>=12.20'}
+    hasBin: true
+    dev: true
 
   /update-browserslist-db/1.0.11_browserslist@4.21.6:
     resolution: {integrity: sha512-dCwEFf0/oT85M1fHBg4F0jtLwJrutGoHSQXCh7u4o2t1drG+c0a9Flnqww6XUKSfQMPpJBRjU8d4RXB09qtvaA==}
