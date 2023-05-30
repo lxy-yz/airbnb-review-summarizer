@@ -6,7 +6,6 @@ import { apiKey, keywords } from '~/logic/storage'
 // const LISTING_REVIEWS_REGEX = /airbnb\.com\/rooms\/\d+/i
 // const defaultEnabled = LISTING_REVIEWS_REGEX.test(window.location.href)
 // const [enabled, _] = useToggle(defaultEnabled)
-// const OPENAI_API_KEY = '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'
 const mode = ref('keywords')
 const keywordsBtn = ref<HTMLButtonElement | null>(null)
 const promptBtn = ref<HTMLButtonElement | null>(null)
