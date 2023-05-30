@@ -1,5 +1,6 @@
 {
   "name": "website",
+  "website": "https://airbnbreviewsummarizer.vercel.app/",
   "displayName": "Airbnb Review Summarizer",
   "version": "0.1.0",
   "private": true,

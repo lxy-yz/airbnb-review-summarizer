@@ -1,27 +1,26 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
 import Head from 'next/head'
 import { NextSeo } from 'next-seo'
 import Header from '../components/header'
 import Main from '../components/main'
 import Footer from '../components/footer'
+import type PkgType from '../package.json'
 import pkg from '../package.json'
+
+const { displayName, description, website } = pkg as typeof PkgType & { displayName: string; description: string; website: string }
 
 export default function Home() {
   return (
     <div className="text-black">
       <NextSeo
-        // @ts-expect-error
-        title={pkg.displayName}
-        // @ts-expect-error
-        description={pkg.description}
-        canonical="https://nine4-2.vercel.app/"
+        title={displayName}
+        description={description}
+        canonical={website}
         openGraph={{
-          url: 'https://nine4-2.vercel.app/',
+          url: website,
         }}
       />
       <Head>
-        {/* @ts-expect-error */}
-        <title>{pkg.displayName}</title>
+        <title>{displayName}</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div className="grid">
