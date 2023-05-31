@@ -98,18 +98,26 @@ function handleEnterKey() {
   if (!keyword)
     return
   keywords.value[keyword] = true
+  customKeyword.value = ''
+}
+
+function handleKeywordToggle(key: string, value: boolean) {
+  if (!value)
+    keywords.value[key] = true
+  else
+    delete keywords.value[key]
 }
 </script>
 
 <template>
-  <div class="z-100 font-sans mb-8">
+  <div class="z-100 font-sans mb-4">
     <div
-      class="bg-white text-gray-800 rounded-lg shadow h-min"
+      class="bg-white text-gray-800 rounded-lg shadow"
       p="x-4 y-4"
       m="y-auto r-2"
     >
       <div
-        class="pt-4 w-full min-h-[256px]"
+        class="w-full max-h-[256px] overflow-y-auto"
       >
         <div class="flex gap-4">
           <div class="max-w-[368px] w-1/2">
@@ -132,23 +140,24 @@ function handleEnterKey() {
                   Prompt
                 </button>
               </div>
-              <div v-show="mode === 'prompt'" class="">
+              <div v-show="mode === 'prompt'">
                 <textarea
                   v-model="customPrompt"
                   required
                   placeholder="Your custom prompt (e.g. summarize the pros and cons of this listing from reviews)"
                   class="
                     text-sm
+                    w-full!
+                    min-h-[150px]!
                     p-2
                     block
-                    w-full
                     box-border
                     rounded-md
                     bg-gray-100
                     border-transparent
                     focus:border-gray-500 focus:bg-white focus:ring-0
                   "
-                  rows="8"
+                  rows="6"
                 />
               </div>
               <div v-show="mode === 'keywords'" class="mt-2">
@@ -159,7 +168,7 @@ function handleEnterKey() {
                     :key="keyword"
                     class="cursor-pointer font-semibold px-3 py-1 border rounded-full"
                     :class="keywordSelected ? 'bg-neutral-700 text-white border-transparent' : 'bg-transparent text-neutral-700 border-neutral-500'"
-                    @click="keywords[keyword] = !keywordSelected"
+                    @click="handleKeywordToggle(keyword, keywordSelected)"
                   >
                     {{ keyword }}
                   </button>
@@ -188,7 +197,7 @@ function handleEnterKey() {
                   </div>
                 </div>
               </div>
-              <div class="mt-10">
+              <div class="mt-4">
                 <button
                   class="relative w-full bg-pink-500 text-white font-bold py-2 px-4 border-b-4 rounded
                   border-pink-700 hover:border-pink-500 hover:bg-pink-400 hover:cursor-pointer"
