@@ -11,7 +11,9 @@
     "start": "next start"
   },
   "dependencies": {
+    "@iconify/react": "^4.1.0",
     "autoprefixer": "^10.4.14",
+    "github": "link:@iconify-icons/mdi/github",
     "next": "12.3.4",
     "next-seo": "^4.18.0",
     "npm": "^6.14.11",
@@ -21,6 +23,7 @@
     "tailwindcss": "^3.3.2"
   },
   "devDependencies": {
+    "@iconify/icons-mdi": "^1.2.46",
     "@types/node": "^20.2.5",
     "@types/react": "18.2.7",
     "typescript": "^5.0.4"

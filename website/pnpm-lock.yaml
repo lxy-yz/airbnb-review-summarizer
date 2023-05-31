@@ -1,9 +1,12 @@
 lockfileVersion: 5.4
 
 specifiers:
+  '@iconify/icons-mdi': ^1.2.46
+  '@iconify/react': ^4.1.0
   '@types/node': ^20.2.5
   '@types/react': 18.2.7
   autoprefixer: ^10.4.14
+  github: link:@iconify-icons/mdi/github
   next: 12.3.4
   next-seo: ^4.18.0
   npm: ^6.14.11
@@ -14,7 +17,9 @@ specifiers:
   typescript: ^5.0.4
 
 dependencies:
+  '@iconify/react': 4.1.0_react@17.0.2
   autoprefixer: 10.4.14_postcss@8.4.24
+  github: link:@iconify-icons/mdi/github
   next: 12.3.4_sfoxds7t5ydpegc3knd667wn6m
   next-seo: 4.29.0_dwjfwrt6uv2f53xn6wotzcxyoa
   npm: 6.14.18
@@ -24,6 +29,7 @@ dependencies:
   tailwindcss: 3.3.2
 
 devDependencies:
+  '@iconify/icons-mdi': 1.2.46
   '@types/node': 20.2.5
   '@types/react': 18.2.7
   typescript: 5.0.4
@@ -34,6 +40,24 @@ packages:
     resolution: {integrity: sha512-UrcABB+4bUrFABwbluTIBErXwvbsU/V7TZWfmbgJfbkwiBuziS9gxdODUyuiecfdGQ85jglMW6juS3+z5TsKLw==}
     engines: {node: '>=10'}
     dev: false
+
+  /@iconify/icons-mdi/1.2.46:
+    resolution: {integrity: sha512-1fu8ZhsrVsSE8ZSJZq69DYnK+hDQnDDH4nkl5TsUpBHkvr+gm5LY3ANjKziWP+q0uc/Xnxml+jrLvAU63lduLw==}
+    dependencies:
+      '@iconify/types': 2.0.0
+    dev: true
+
+  /@iconify/react/4.1.0_react@17.0.2:
+    resolution: {integrity: sha512-Mf72i3TNNKpKCKxmo7kzqyrUdCgaoljpqtWmtqpqwyxoV4ukhnDsSRNLhf2yBnqGr3cVZsdj/i0FMpXIY0Qk0g==}
+    peerDependencies:
+      react: '>=16'
+    dependencies:
+      '@iconify/types': 2.0.0
+      react: 17.0.2
+    dev: false
+
+  /@iconify/types/2.0.0:
+    resolution: {integrity: sha512-+wluvCrRhXrhyOmRDJ3q8mux9JkKy5SJ/v8ol2tu4FVjyYvtEzkc/3pK15ET6RKg4b4w4BmTk1+gsCUhf21Ykg==}
 
   /@jridgewell/gen-mapping/0.3.3:
     resolution: {integrity: sha512-HLhSWOLRi875zjjMG/r+Nv0oCW8umGb0BgEhyX3dDX3egwZtB8PqLnjz3yedt8R5StBrzcg4aBpnh8UA9D1BoQ==}
