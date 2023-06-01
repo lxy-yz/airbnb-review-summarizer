@@ -1,7 +1,7 @@
 export default function Footer() {
   return (
     <footer className="">
-      <div className="pb-10 w-full flex justify-center">
+      <div className="pt-6 py-12 w-full flex justify-center">
         <a
           href="https://www.producthunt.com/posts/airbnb-review-summarizer?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-airbnb&#0045;review&#0045;summarizer"
           target="_blank"
