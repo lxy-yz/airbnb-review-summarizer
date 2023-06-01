@@ -22,6 +22,7 @@ export default function Home() {
       <Head>
         <title>{displayName}</title>
         <link rel="icon" href="/favicon.ico" />
+        <script defer data-domain="airbnbreviewsummarizer.vercel.app" src="https://plausible.liallen.me/js/script.js"></script>
       </Head>
       <div className="grid">
         <Header />
