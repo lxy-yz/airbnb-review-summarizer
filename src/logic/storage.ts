@@ -8,8 +8,8 @@ export const keywords = useStorageLocal<Record<string, boolean>>(`${PREFIX}_keyw
   'Noise': false,
   'Sleep': false,
   'Safety': false,
+  'Dedicated workspace': false,
   'Solo Traveler': false,
-  'Couple Travelers': false,
   'Sauna': false,
   'Books': false,
 })

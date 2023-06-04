@@ -201,6 +201,7 @@ function handleKeywordToggle(key: string, value: boolean) {
                 <button
                   class="relative w-full bg-pink-500 text-white font-bold py-2 px-4 border-b-4 rounded
                   border-pink-700 hover:border-pink-500 hover:bg-pink-400 hover:cursor-pointer"
+                  :disabled="isLoading"
                   @click="handleSummarizeReviews()"
                 >
                   <gg-spinner v-show="isLoading" class="animate-spin absolute left-3" />
