@@ -155,7 +155,7 @@ async function summarizeReviews() {
                 />
               </div>
               <div v-show="mode === 'keywords'">
-                <div class="flex flex-wrap gap-3">
+                <div class="flex flex-wrap gap-2">
                   <button
                     v-for="keyword in keywords"
                     :key="keyword.id"

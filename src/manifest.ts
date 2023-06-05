@@ -44,8 +44,8 @@ export async function getManifest() {
       {
         matches: [
           // '<all_urls>',
-          'https://airbnb.com/*',
-          'https://*.airbnb.com/*',
+          'https://airbnb.com/*/reviews*',
+          'https://*.airbnb.com/*/reviews*',
         ],
         js: [
           'dist/contentScripts/index.global.js',

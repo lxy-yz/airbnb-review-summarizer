@@ -3,7 +3,7 @@ import { useStorageLocal } from '~/composables/useStorageLocal'
 
 const PREFIX = pkg.name
 
-export const expanded = useStorageLocal(`${PREFIX}_expand_ui`, false)
+export const expanded = useStorageLocal(`${PREFIX}_expand_ui`, true)
 export const apiKey = useStorageLocal(`${PREFIX}_openai_apikey`, '')
 export const keywords = useStorageLocal<Keyword[]>(`${PREFIX}_keywords`, [
   {
