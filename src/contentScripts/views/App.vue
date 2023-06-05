@@ -91,22 +91,6 @@ async function summarizeReviews() {
     }
   }
 }
-
-const customKeyword = ref('')
-function handleEnterKey() {
-  const keyword = customKeyword.value.trim()
-  if (!keyword)
-    return
-  keywords.value[keyword] = true
-  customKeyword.value = ''
-}
-
-function handleKeywordToggle(key: string, value: boolean) {
-  if (!value)
-    keywords.value[key] = true
-  else
-    delete keywords.value[key]
-}
 </script>
 
 <template>
@@ -127,11 +111,11 @@ function handleKeywordToggle(key: string, value: boolean) {
       </div>
       <div
         v-show="expanded"
-        class="mt-4 w-full max-h-[256px] overflow-y-auto"
+        class="mt-4 w-full h-[256px]"
       >
-        <div class="flex gap-4">
-          <div class="max-w-[368px] w-1/2">
-            <div class="flex flex-col">
+        <div class="flex gap-4 h-full">
+          <div class="w-1/2 h-full overflow-y-auto">
+            <div class="flex flex-col justify-between h-full">
               <div class="inline-flex mb-4" role="group">
                 <button
                   ref="keywordsBtn"
@@ -170,41 +154,17 @@ function handleKeywordToggle(key: string, value: boolean) {
                   rows="6"
                 />
               </div>
-              <div v-show="mode === 'keywords'" class="mt-2">
-                <!-- <span class="text-sm font-semibold">What do you care about?</span> -->
-                <div class="flex flex-wrap gap-2">
+              <div v-show="mode === 'keywords'">
+                <div class="flex flex-wrap gap-3">
                   <button
-                    v-for="([keyword, keywordSelected]) in Object.entries(keywords)"
-                    :key="keyword"
-                    class="cursor-pointer font-semibold px-3 py-1 border rounded-full"
-                    :class="keywordSelected ? 'bg-neutral-700 text-white border-transparent' : 'bg-transparent text-neutral-700 border-neutral-500'"
-                    @click="handleKeywordToggle(keyword, keywordSelected)"
+                    v-for="keyword in keywords"
+                    :key="keyword.id"
+                    class="cursor-pointer font-semibold px-3 py-2 border rounded-full"
+                    :class="keyword.selected ? 'bg-neutral-700 text-white border-transparent' : 'bg-transparent text-neutral-700 border-neutral-500'"
+                    @click="keyword.selected = !keyword.selected"
                   >
-                    {{ keyword }}
+                    {{ keyword.keyword }}
                   </button>
-                </div>
-                <div class="mt-4 flex">
-                  <input
-                    v-model="customKeyword"
-                    type="text"
-                    class="
-                    text-xs
-                    pr-[10px]
-                    py-2
-                    block
-                    w-full
-                    rounded-md
-                    bg-gray-100
-                    border-transparent
-                    focus:border-gray-500 focus:bg-white focus:ring-0
-                  "
-                    placeholder="Custom keyword (e.g. ⭐ reviews)"
-                    @keyup.enter="handleEnterKey()"
-                  >
-
-                  <div class="relative flex items-center">
-                    <uil-enter class="absolute right-[10px] block m-auto text-gray-500 font-light" />
-                  </div>
                 </div>
               </div>
               <div class="mt-4">
@@ -220,7 +180,7 @@ function handleKeywordToggle(key: string, value: boolean) {
               </div>
             </div>
           </div>
-          <div class="relative flex-1 flex flex-col bg-gray-100">
+          <div class="relative flex-1 flex flex-col bg-gray-100 overflow-y-auto">
             <div
               :class="summary ? 'hidden!' : 'block'"
               class="absolute w-full h-full flex justify-center items-center text-gray-500 font-semibold"
