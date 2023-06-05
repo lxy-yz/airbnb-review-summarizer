@@ -3,6 +3,7 @@ import { useStorageLocal } from '~/composables/useStorageLocal'
 
 const PREFIX = pkg.name
 
+export const expanded = useStorageLocal(`${PREFIX}_expand_ui`, false)
 export const apiKey = useStorageLocal(`${PREFIX}_openai_apikey`, '')
 export const keywords = useStorageLocal<Record<string, boolean>>(`${PREFIX}_keywords`, {
   'Noise': false,

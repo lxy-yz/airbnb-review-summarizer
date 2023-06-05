@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import 'uno.css'
 import { makePrompt } from '../utils'
-import { apiKey, keywords } from '~/logic/storage'
+import { apiKey, expanded, keywords } from '~/logic/storage'
 
 // const LISTING_REVIEWS_REGEX = /airbnb\.com\/rooms\/\d+/i
 // const defaultEnabled = LISTING_REVIEWS_REGEX.test(window.location.href)
@@ -116,8 +116,18 @@ function handleKeywordToggle(key: string, value: boolean) {
       p="x-4 y-4"
       m="y-auto r-2"
     >
+      <div class="flex justify-between items-center px-3">
+        <div class="font-bold">
+          Summary
+        </div>
+        <div class="cursor-pointer" @click="expanded = !expanded">
+          <ph-caret-down v-if="!expanded" />
+          <ph-caret-up v-else class="" />
+        </div>
+      </div>
       <div
-        class="w-full max-h-[256px] overflow-y-auto"
+        v-show="expanded"
+        class="mt-4 w-full max-h-[256px] overflow-y-auto"
       >
         <div class="flex gap-4">
           <div class="max-w-[368px] w-1/2">
